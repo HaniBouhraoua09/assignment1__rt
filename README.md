@@ -131,6 +131,16 @@ ros2 run assignment1_rt ui_node
 - The launch file ensures that the backend system is always initialized correctly.  
 - The UI node is the only interactive component for the user.  
 - The Distance Node continuously enforces safety (collision + boundary monitoring).  
+<<<<<<< HEAD
+=======
+
+---
+
+## Requirements
+- ROS 2 Jazzy  
+- turtlesim package installed  
+- Python-based ROS 2 nodes  
+>>>>>>> cc830ddc3e9c68eed373e2db7b011158d4c77db5
 
 ---
 

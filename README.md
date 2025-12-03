@@ -24,7 +24,7 @@ Provides a command-line interface allowing the user to:
 - Specify linear and angular velocities
 
 **Behavior:**  
-- Sends the chosen velocity commands continuously for **1 second**  
+- Sends the chosen velocity commands continuously for **1 second**
 - Automatically stops the turtle afterward  
 - Waits for further user input  
 
@@ -65,24 +65,47 @@ Resets and prepares the simulation environment.
 
 ---
 
-## How to Run the Project
+## Building the Project
 
-This assignment now runs using **2 terminals** thanks to the launch file.
-
-In **every** new terminal, run :
-(But before make sure you are in the same directory otherwise you will get "not found error") :
-
+### 1. Navigate to your ROS 2 workspace:
 ```bash
-source ~/Desktop/ros2/install/setup.bash
+cd ~/
+```
+
+### 2. Build using colcon:
+```bash
+colcon build
+```
+
+### 3. Source the overlay:
+```bash
+source install/setup.bash
 ```
 
 ---
 
+## How to Run the Project
+
+This assignment runs using **2 terminals** thanks to the launch file.
+
+### ⚠️ IMPORTANT  
+In **EVERY** new terminal, you must source your workspace before running anything:
+
+```bash
+source ~/ros2/install/setup.bash
+```
+
+This is my directory workspace , Make sure the path matches your workspace.
+
+---
+
 ### **Terminal 1 — System Backend**
-This automatically:
-- Starts the **Turtlesim** simulator  
-- Runs the **Spawner** (reset + spawn turtles)  
-- Starts the **Distance Node** (safety monitor)
+
+This single command automatically:
+
+- Starts the **Turtlesim simulator**  
+- Runs the **Spawner** (reset + create two turtles)  
+- Activates the **Distance Node** (collision + boundary safety monitor)
 
 Run:
 
@@ -93,6 +116,7 @@ ros2 launch assignment1_rt assignment1.launch.py
 ---
 
 ### **Terminal 2 — User Interface**
+
 Use this terminal to send commands and control both robots.
 
 Run:
@@ -104,9 +128,17 @@ ros2 run assignment1_rt ui_node
 ---
 
 ## Notes
-- The launch file ensures the backend system is always initialized correctly.
-- The UI node remains the only interactive part for the user.
-- The system maintains automatic safety through the distance node at all times.
+- The launch file ensures that the backend system is always initialized correctly.  
+- The UI node is the only interactive component for the user.  
+- The Distance Node continuously enforces safety (collision + boundary monitoring).  
 
 ---
+
+## Requirements
+- ROS 2 Jazzy  
+- turtlesim package installed  
+- Python-based ROS 2 nodes  
+
+---
+
 

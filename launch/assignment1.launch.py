@@ -15,11 +15,16 @@ def generate_launch_description():
             executable='spawner',
             name='spawner'
         ),
-        # 3. Start the Distance Monitor
-        Node(
-            package='assignment1_rt',
-            executable='distance_node',
-            name='distance_monitor',
-            output='screen' # This allows you to see the "Too Close!" warnings
-        ),
+	# 3. Start the Distance Monitor
+	Node(
+		package='assignment1_rt',
+		executable='distance_node',
+		name='distance_monitor',
+		output='screen',
+		parameters=[{
+		    'dist_threshold': 2.0,  # We can change this easily now!
+		    'wall_min': 1.5,
+		    'wall_max': 9.5
+		}]
+	),
     ])

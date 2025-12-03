@@ -20,17 +20,16 @@ The architecture is based on **three custom ROS 2 nodes** that interact with the
 ### 1. `ui_node`
 **Purpose:**  
 Provides a command-line interface allowing the user to:
-
 - Select a robot (`turtle1` or `turtle2`)
 - Specify linear and angular velocities
 
 **Behavior:**  
 - Sends the chosen velocity commands continuously for **1 second**  
 - Automatically stops the turtle afterward  
-- Allows repeated user input for continuous control  
+- Waits for further user input  
 
 **ROS Topics:**  
-- Publishes velocity commands to:  
+- Publishes to:  
   - `/turtle1/cmd_vel`  
   - `/turtle2/cmd_vel`
 
@@ -41,19 +40,16 @@ Provides a command-line interface allowing the user to:
 Monitors both turtles to ensure safe operation.
 
 **Safety Features:**  
-- **Collision avoidance:**  
-  If the distance between the two turtles becomes **< 1.5**, both are forced to stop.
-  
-- **Boundary protection:**  
-  If a turtle moves outside the safe zone **(x/y < 1.0 or > 10.0)**, it is immediately stopped.
+- **Collision avoidance:** stops both robots if distance < **1.5**  
+- **Boundary protection:** stops a robot if x or y < **1.0** or > **10.0**  
 
 **ROS Topics:**  
 - Subscribes to:  
   - `/turtle1/pose`  
-  - `/turtle2/pose`
+  - `/turtle2/pose`  
 - Publishes:  
-  - `/distance` (current distance between turtles)  
-  - `/turtleX/cmd_vel` for emergency stop commands
+  - `/distance`  
+  - `/turtleX/cmd_vel` (emergency stop)
 
 ---
 
@@ -62,20 +58,19 @@ Monitors both turtles to ensure safe operation.
 Resets and prepares the simulation environment.
 
 **Behavior:**  
-- Kills the default turtlesim turtle  
-- Spawns **two fresh turtles**:
-  - One at the center  
+- Kills the default turtle  
+- Spawns **two turtles**:
+  - One in the center  
   - One at a random position  
-- Ensures visual distinction and a consistent initial setup
 
 ---
 
 ## How to Run the Project
 
-This assignment requires **4 separate terminals**, one for each active node.
+This assignment now runs using **2 terminals** thanks to the launch file.
 
-### ⚠️ IMPORTANT — Source ROS 2 in EVERY terminal
-Before running **any** command below, execute:
+In **every** new terminal, run :
+(But before make sure you are in the same directory otherwise you will get "not found error") :
 
 ```bash
 source ~/Desktop/ros2/install/setup.bash
@@ -83,41 +78,35 @@ source ~/Desktop/ros2/install/setup.bash
 
 ---
 
-## Running the Nodes
+### **Terminal 1 — System Backend**
+This automatically:
+- Starts the **Turtlesim** simulator  
+- Runs the **Spawner** (reset + spawn turtles)  
+- Starts the **Distance Node** (safety monitor)
 
-### **Terminal 1 — Simulator**
-Start the graphical simulator window:
+Run:
 
 ```bash
-ros2 run turtlesim turtlesim_node
+ros2 launch assignment1_rt assignment1.launch.py
 ```
 
 ---
 
-### **Terminal 2 — Spawner**
-Run this once to reset the environment and spawn both turtles.  
-You can close this terminal after it finishes.
+### **Terminal 2 — User Interface**
+Use this terminal to send commands and control both robots.
 
-```bash
-ros2 run assignment1_rt spawner
-```
-
----
-
-### **Terminal 3 — Safety Monitor**
-This runs in the background to prevent collisions and boundary violations.
-
-```bash
-ros2 run assignment1_rt distance_node
-```
-
----
-
-### **Terminal 4 — User Interface**
-Use this terminal to send commands and move the robots.
+Run:
 
 ```bash
 ros2 run assignment1_rt ui_node
 ```
 
+---
+
+## Notes
+- The launch file ensures the backend system is always initialized correctly.
+- The UI node remains the only interactive part for the user.
+- The system maintains automatic safety through the distance node at all times.
+
+---
 

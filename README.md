@@ -69,7 +69,7 @@ Resets and prepares the simulation environment.
 
 ### 1. Navigate to your ROS 2 workspace:
 ```bash
-cd ~/
+cd ~/ros2_ws
 ```
 
 ### 2. Build using colcon:
@@ -92,10 +92,10 @@ This assignment runs using **2 terminals** thanks to the launch file.
 In **EVERY** new terminal, you must source your workspace before running anything:
 
 ```bash
-source ~/ros2/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ```
 
-This is my directory workspace , Make sure the path matches your workspace.
+Make sure the path matches your workspace directory.
 
 ---
 
@@ -127,28 +127,41 @@ ros2 run assignment1_rt ui_node
 
 ---
 
+## Changing Parameters at Runtime
+
+The `distance_node` uses ROS 2 parameters for safety thresholds, allowing runtime modification **without stopping the simulation**.
+
+To change the collision threshold (e.g., set it to 3.0):
+
+```bash
+ros2 param set /distance_monitor dist_threshold 3.0
+```
+
+Verify the parameter:
+
+```bash
+ros2 param get /distance_monitor dist_threshold
+```
+
+---
+
 ## Notes
 - The launch file ensures that the backend system is always initialized correctly.  
 - The UI node is the only interactive component for the user.  
 - The Distance Node continuously enforces safety (collision + boundary monitoring).  
-<<<<<<< HEAD
-=======
+
+---
+
+## Refactoring Attempt (Optional Feature)
+An attempt was made to implement **runtime parameter configuration** to allow dynamic adjustment of safety thresholds without recompilation.  
+While this feature was not fully integrated into the final submission due to technical constraints, the **core system (control, safety monitoring, collision avoidance)** works flawlessly.  
+This enhancement is planned for the next version of the project.
 
 ---
 
 ## Requirements
 - ROS 2 Jazzy  
-- turtlesim package installed  
+- `turtlesim` package installed  
 - Python-based ROS 2 nodes  
->>>>>>> cc830ddc3e9c68eed373e2db7b011158d4c77db5
-
----
-
-## Requirements
-- ROS 2 Jazzy  
-- turtlesim package installed  
-- Python-based ROS 2 nodes  
-
----
 
 
